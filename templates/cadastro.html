@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="../static/cadastro.css"/>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+	{% with messages = get_flashed_messages() %}
+
+	{% if messages %}
+
+	{% for message in messages %}
+
+	<div class="alert alert-warning alert-dismissable" role="alert">
+
+		<button type="button" class="close" data-dismiss="alert" aria-label="close"></button>
+
+
+		{{message}}
+
+
+	</div>
+
+
+	{% endfor %}
+
+	{% endif %}
+	{% endwith %}
+
+	<div class="row">
+		<div class="col-md-6 mx-auto p-0">
+			<div class="card">
+				<div class="login-box">
+					<div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+						<label for="tab-1" class="tab">Logar</label>
+						<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Cadastrar</label>
+						<div class="login-space">
+							<form action="{{url_for('logar')}}" method="post" class="login">
+								<div class="group">
+									<label for="email" class="label">E-mail</label>
+									<input id="email_logado" name="email" type="text" class="input" placeholder="Digite seu e-mail">
+								</div>
+
+								<div class="group">
+									<label for="senha" class="label">Senha</label>
+									<input id="senha_logado" name="senha" type="password" class="input" data-type="password" placeholder="********">
+								</div>
+								<div class="group">
+									<button type="submit" class="button">Entrar</button>
+								</div>
+								<div class="hr"></div>
+							</form>
+							<form method="post" action="{{url_for('cadastrar')}}" class="sign-up-form" id="cadastro">
+								<div class="group">
+									<label for="nome" class="label">Usuário</label>
+									<input id="nome" name="nome" type="text" class="input" autocomplete="off" placeholder="Crie um nome de usuário">
+								</div>
+
+								<div class="group">
+									<label for="senha" class="label">Senha</label>
+									<input id="senha" name="senha" type="password" class="input" data-type="password" placeholder="Crie uma senha">
+								</div>
+
+								<div class="group">
+									<label for="email" class="label">E-mail</label>
+									<input id="email" name="email" type="email" class="input" autocomplete="off" placeholder="Digite seu e-mail">
+								</div>
+
+								<div class="group">
+									<button type="submit" class="button">Criar conta</button>
+								</div>
+								<div class="hr"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

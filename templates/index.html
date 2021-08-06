@@ -1,0 +1,188 @@
+{% extends "template.html" %}
+{% include "navbar.html" %}
+
+
+
+{% block title %} CRUD-Carros {%  endblock %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col">
+            <div class="jumbotron p-3">
+                <h2>
+                    <b>Inserir Carro Novo</b>
+                    <button type="submit" class="btn btn-info float-right" data-toggle="modal" data-target="#modalADD">
+                        Adicionar Carro
+                    </button>
+                </h2>
+
+                <br/>
+
+                {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                {% for message in messages %}
+
+                <div class="alert alert-success alert-dismissable" role="alert">
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                        <span aria-hidden="true">x</span>
+
+                    </button>
+
+
+                {{message}}
+
+
+                </div>
+
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+                <br/>
+
+                <table class="table table-hover table-striped table-primary" id="tabela">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Cor</th>
+                        <th scope="col">Combustível</th>
+                        <th scope="col">Ano</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+
+                    {% for row in carros %}
+
+                    <tr>
+                        <td>{{row.id}}</td>
+                        <td>{{row.marca}}</td>
+                        <td>{{row.modelo}}</td>
+                        <td>{{row.cor}}</td>
+                        <td>{{row.combustivel}}</td>
+                        <td>{{row.ano}}</td>
+
+                        <td>
+                            <a href="/edit/{{row.id}}" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#modaleditar{{row.id}}">Editar</a>
+                            <a href="/deletar/{{row.id}}" class="btn btn-outline-danger btn-sm" onclick="myFunction()">Deletar</a>
+                        </td>
+                    </tr>
+
+                    <div class="modal fade" id="modaleditar{{row.id}}" role="dialog">
+                       <div class="modal-dialog">
+                          <div class="modal-content">
+                             <div class="modal-header">
+                                <h4 class="modal-title">Editar Carro</h4>
+                             </div>
+                             <div class="modal-body">
+                                <form action="{{url_for('atualiza')}}" method="POST">
+                                   <div class="form-group">
+                                      <label>Marca</label>
+                                      <input type="hidden" name="id" value="{{row.id}}">
+                                      <input type="text" class="form-control" name="marca" required="1" autocomplete="off" value="{{row.marca}}">
+                                   </div>
+
+                                   <div class="form-group">
+                                      <label>Modelo</label>
+                                      <input type="text" class="form-control" name="modelo" required="1" autocomplete="off" value="{{row.modelo}}">
+                                   </div>
+
+                                   <div class="form-group">
+                                      <label>Cor:</label>
+                                      <input type="text" class="form-control" name="cor" required="1" autocomplete="off" value="{{row.cor}}">
+                                   </div>
+
+                                   <div class="form-group">
+                                      <label>Combustivel:</label>
+                                      <input type="text" class="form-control" name="combustivel" required="1" autocomplete="off" value="{{row.combustivel}}">
+                                   </div>
+
+                                   <div class="form-group">
+                                      <label>Ano:</label>
+                                      <input type="number" class="form-control" name="ano" required="1" autocomplete="off" value="{{row.ano}}">
+                                   </div>
+
+                                   <div class="form-group">
+                                      <button class="btn btn-primary" type="submit">Editar</button>
+                                   </div>
+                                </form>
+
+                             </div>
+
+                             <div class="modal-footer">
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">Fechar</button>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            <div class="modal fade" id="modalADD" role="dialog">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h4 class="modal-title">Adicionar Carro</h4>
+                     </div>
+                     <div class="modal-body">
+                        <form action="{{url_for('inserir')}}" method="POST">
+                           <div class="form-group">
+                              <label>Marca</label>
+                              <input type="text" class="form-control" name="marca" required="1" autocomplete="off">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Modelo</label>
+                              <input type="text" class="form-control" name="modelo" required="1" autocomplete="off">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Cor:</label>
+                              <input type="text" class="form-control" name="cor" required="1" autocomplete="off">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Combustivel:</label>
+                              <input type="text" class="form-control" name="combustivel" required="1" autocomplete="off">
+                           </div>
+
+                           <div class="form-group">
+                              <label>Ano:</label>
+                              <input type="number" class="form-control" name="ano" required="1" autocomplete="off">
+                           </div>
+
+                           <div class="form-group">
+                              <button class="btn btn-primary" type="submit">Adicionar</button>
+                           </div>
+                        </form>
+
+                     </div>
+
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Fechar</button>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
